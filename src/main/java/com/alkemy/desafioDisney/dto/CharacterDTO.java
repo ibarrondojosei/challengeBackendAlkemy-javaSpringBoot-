@@ -5,8 +5,8 @@
 package com.alkemy.desafioDisney.dto;
 
 import com.alkemy.desafioDisney.entities.MovieEntity;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,6 +31,6 @@ public class CharacterDTO {
     
     private String historia;
         
-    private Set<MovieEntity> listCharacter= new HashSet<>();
+    private List<MovieEntity> listCharacter= new ArrayList<>();
     
 }
