@@ -4,7 +4,9 @@
  */
 package com.alkemy.desafioDisney.entities;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -54,7 +56,7 @@ public class CharacterEntity {
             joinColumns = @JoinColumn(name="personaje_id"),
             inverseJoinColumns = @JoinColumn(name="pelicula_id"))
     
-    private Set<MovieEntity> listCharacter= new HashSet<>();
+    private List<MovieEntity> listCharacter= new ArrayList<>();
     
     
     
