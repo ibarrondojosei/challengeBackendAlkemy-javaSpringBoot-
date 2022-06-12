@@ -29,16 +29,16 @@ import org.hibernate.annotations.GenericGenerator;
 @NoArgsConstructor
 @Table(name="genero")
 
-public class GeneroEntity {
+public class GenderEntity {
     
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")  
     private String id;
     
-    private String nombre;
+    private String name;
     
-    private String imagen;
+    private String image;
     
     
     

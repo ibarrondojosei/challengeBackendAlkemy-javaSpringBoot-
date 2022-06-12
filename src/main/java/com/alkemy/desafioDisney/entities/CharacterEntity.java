@@ -32,20 +32,20 @@ import org.hibernate.annotations.GenericGenerator;
 @NoArgsConstructor
 @Table(name="personaje")
 
-public class PersonajeEntity {
+public class CharacterEntity {
     
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")  
     private String id;
     
-    private String imagen;
+    private String image;
     
-    private String nombre;
+    private String name;
     
-    private Integer edad;
+    private Integer age;
     
-    private Double peso;
+    private Double weight;
     
     private String historia;
     
@@ -54,7 +54,7 @@ public class PersonajeEntity {
             joinColumns = @JoinColumn(name="personaje_id"),
             inverseJoinColumns = @JoinColumn(name="pelicula_id"))
     
-    private Set<PeliculaEntity> listadoPeliculas= new HashSet<>();
+    private Set<MovieEntity> listCharacter= new HashSet<>();
     
     
     

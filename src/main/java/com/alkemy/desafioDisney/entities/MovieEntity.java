@@ -40,32 +40,32 @@ import org.springframework.format.annotation.DateTimeFormat;
 @NoArgsConstructor
 @Table(name="peliculaSerie")
 
-public class PeliculaEntity {
+public class MovieEntity {
     
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")  
     private String id;
     
-    private String imagen;
+    private String image;
     
-    private String titulo;
+    private String title;
     
     @DateTimeFormat(pattern = "yyyy/mm/dd")
     @Column(name="fecha_creacion")
-    private LocalDate fecha;
+    private LocalDate date;
     
-    private Integer calificacion;
+    private Integer qualification;
     
     @ManyToMany (mappedBy = "listadoPeliculas", cascade=CascadeType.ALL)
-    private List<PersonajeEntity> listaPersonaje = new ArrayList<>();
+    private List<CharacterEntity> listCharacter = new ArrayList<>();
     
     
     @ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name="genero_id", insertable = false, updatable = false)
-    private GeneroEntity genero;
+    private GenderEntity gender;
     
     @Column(name="genero_id", nullable = false)
-    private String generoId;
+    private String genderId;
     
 }
