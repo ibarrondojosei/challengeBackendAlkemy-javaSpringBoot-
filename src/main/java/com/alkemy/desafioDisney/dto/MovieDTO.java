@@ -4,11 +4,13 @@
  */
 package com.alkemy.desafioDisney.dto;
 
-
+import com.alkemy.desafioDisney.entities.CharacterEntity;
+import com.alkemy.desafioDisney.entities.GenderEntity;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
-
 
 /**
  *
@@ -17,21 +19,21 @@ import lombok.Setter;
 
 @Getter
 @Setter
-
-public class CharacterDTO {
+public class MovieDTO {
     
     private Long id;
     
     private String image;
     
-    private String name;
+    private String title;
     
-    private Integer age;
+    private LocalDate date;
     
-    private Double weight;
+    private Integer qualification;
     
-    private String history;
+    private List<CharacterDTO> listCharacter;
+    
+    private GenderEntity gender;
         
-    private List<MovieDTO> listMovie;
-    
+   
 }

@@ -10,7 +10,9 @@ import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -19,7 +21,8 @@ import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 /**
  *
@@ -33,13 +36,13 @@ import org.hibernate.annotations.GenericGenerator;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name="personaje")
-
+@SQLDelete(sql= "UPDATE personaje SET deleted=true WHERE id=?")
+@Where(clause="deleted=false")
 public class CharacterEntity {
     
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")  
-    private String id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)   
+    private Long id;
     
     private String image;
     
@@ -49,14 +52,18 @@ public class CharacterEntity {
     
     private Double weight;
     
-    private String historia;
+    private String history;
     
-    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
-    @JoinTable(name="personaje_pelicula", 
-            joinColumns = @JoinColumn(name="personaje_id"),
-            inverseJoinColumns = @JoinColumn(name="pelicula_id"))
+//    @ManyToMany(fetch=FetchType.LAZY, 
+//            cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+//    @JoinTable(name="personaje_pelicula", 
+//            joinColumns = @JoinColumn(name="personaje_id"),
+//            inverseJoinColumns = @JoinColumn(name="pelicula_id"))
     
-    private List<MovieEntity> listCharacter= new ArrayList<>();
+    @ManyToMany (mappedBy = "listCharacter", cascade= {CascadeType.MERGE, CascadeType.PERSIST})
+    private List<MovieEntity> listMovie= new ArrayList<>();
+     
+    private boolean deleted = Boolean.FALSE; 
     
     
     

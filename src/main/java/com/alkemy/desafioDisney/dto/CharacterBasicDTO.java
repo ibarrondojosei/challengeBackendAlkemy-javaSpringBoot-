@@ -4,11 +4,8 @@
  */
 package com.alkemy.desafioDisney.dto;
 
-
-import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
-
 
 /**
  *
@@ -17,8 +14,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-
-public class CharacterDTO {
+public class CharacterBasicDTO {
     
     private Long id;
     
@@ -31,7 +27,4 @@ public class CharacterDTO {
     private Double weight;
     
     private String history;
-        
-    private List<MovieDTO> listMovie;
-    
 }

@@ -5,10 +5,9 @@
 package com.alkemy.desafioDisney.dto;
 
 
-import java.util.List;
+import java.time.LocalDate;
 import lombok.Getter;
 import lombok.Setter;
-
 
 /**
  *
@@ -17,21 +16,17 @@ import lombok.Setter;
 
 @Getter
 @Setter
-
-public class CharacterDTO {
+public class MovieBasicDTO {
     
     private Long id;
     
     private String image;
     
-    private String name;
+    private String title;
     
-    private Integer age;
+    private LocalDate date;
     
-    private Double weight;
+    private Integer qualification;
     
-    private String history;
-        
-    private List<MovieDTO> listMovie;
     
 }

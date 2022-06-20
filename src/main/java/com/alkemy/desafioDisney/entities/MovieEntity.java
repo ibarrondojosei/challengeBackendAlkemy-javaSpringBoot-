@@ -7,20 +7,25 @@ package com.alkemy.desafioDisney.entities;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -39,13 +44,14 @@ import org.springframework.format.annotation.DateTimeFormat;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name="peliculaSerie")
+@SQLDelete(sql= "UPDATE peliculaSerie SET deleted=true WHERE id=?")
+@Where(clause="deleted=false")
 
 public class MovieEntity {
     
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")  
-    private String id;
+   @GeneratedValue(strategy = GenerationType.SEQUENCE)   
+    private Long id;
     
     private String image;
     
@@ -55,17 +61,44 @@ public class MovieEntity {
     @Column(name="fecha_creacion")
     private LocalDate date;
     
+    @Range (min=1, max=5)
     private Integer qualification;
     
-    @ManyToMany (mappedBy = "listadoPeliculas", cascade=CascadeType.ALL)
+    @ManyToMany(fetch=FetchType.LAZY)
+    @JoinTable(name="pelicula_personaje", 
+            joinColumns = @JoinColumn(name="pelicula_id", nullable = false),
+            inverseJoinColumns = @JoinColumn(name="personaje_id", nullable = false))
     private List<CharacterEntity> listCharacter = new ArrayList<>();
     
     
-    @ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name="genero_id", insertable = false, updatable = false)
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="genero_id")
     private GenderEntity gender;
     
-    @Column(name="genero_id", nullable = false)
-    private String genderId;
+    private boolean deleted = Boolean.FALSE; 
+    
+//    
+// public void addCharacter(CharacterEntity character){
+//        this.listCharacter.add(character);
+//    }
+//
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//
+//        MovieEntity movie = (MovieEntity) o;
+//
+//        if (Double.compare(movie.qualification, qualification) != 0) return false;
+//        if (!Objects.equals(id, movie.id)) return false;
+//        return Objects.equals(listCharacter, movie.listCharacter);
+//    }
+//
+//
+//    public void removePersonaje(MovieEntity movie){
+//        this.listCharacter.remove(movie);
+//
+//    }
+    
     
 }
