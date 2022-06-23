@@ -31,12 +31,18 @@ public class MovieServiceImpl implements MovieService {
     @Transactional
     @Override
     public MovieDTO save(MovieDTO dto) {
+//        dto.getListCharacter().forEach(x -> {
+//            System.out.println("DTo ID LISTA CHARACTER: " + x.getId());
+//        });
+        
         MovieEntity entity = movieMapper.movieDTO2Entity(dto);
+        
+        
         
         MovieEntity entitySaved = movieRepository.save(entity);
         
         MovieDTO resultDTO = 
-                movieMapper.movieEntity2DTO(entitySaved,false);
+                movieMapper.movieEntity2DTO(entitySaved,true);
         
         
         return resultDTO;
@@ -57,7 +63,7 @@ public class MovieServiceImpl implements MovieService {
         MovieEntity characterEntity = 
                 this.movieRepository.save(entity.get());
         MovieDTO result = 
-                this.movieMapper.movieEntity2DTO(characterEntity,false);
+                this.movieMapper.movieEntity2DTO(characterEntity,true);
         
         return result;
     }

@@ -30,7 +30,7 @@ public class CharacterController {
     private CharacterService characterService;
     
     @PostMapping
-    public ResponseEntity <CharacterDTO> save (@Valid @RequestBody CharacterDTO character){
+    public ResponseEntity <CharacterDTO> save (@RequestBody CharacterDTO character){
         
         CharacterDTO characterSave = characterService.save(character);
         

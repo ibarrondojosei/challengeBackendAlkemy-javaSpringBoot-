@@ -58,7 +58,7 @@ public class CharacterServiceImpl implements CharacterService {
         CharacterEntity characterEntity = 
                 this.characterRepository.save(entity.get());
         CharacterDTO result = 
-                this.characterMapper.charaterEntity2DTO(characterEntity,false);
+                this.characterMapper.charaterEntity2DTO(characterEntity,true);
         
         return result;
     }

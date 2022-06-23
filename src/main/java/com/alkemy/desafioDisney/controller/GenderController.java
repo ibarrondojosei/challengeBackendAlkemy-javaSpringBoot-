@@ -30,7 +30,7 @@ public class GenderController {
     private GenderService genderService;
     
     @PostMapping
-    public ResponseEntity <GenderDTO> save (@Valid @RequestBody GenderDTO gender){
+    public ResponseEntity <GenderDTO> save (@RequestBody GenderDTO gender){
         
         GenderDTO genderSave = genderService.save(gender);
         

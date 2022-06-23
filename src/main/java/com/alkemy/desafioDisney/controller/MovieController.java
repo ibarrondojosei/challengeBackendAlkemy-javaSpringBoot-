@@ -31,7 +31,7 @@ public class MovieController {
     private MovieService movieService;
     
     @PostMapping
-    public ResponseEntity <MovieDTO> save (@Valid @RequestBody MovieDTO movie){
+    public ResponseEntity <MovieDTO> save (@RequestBody MovieDTO movie){
         
         MovieDTO movieSave = movieService.save(movie);
         
