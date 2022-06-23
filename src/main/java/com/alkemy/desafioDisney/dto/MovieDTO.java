@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -27,13 +28,14 @@ public class MovieDTO {
     
     private String title;
     
+   
     private LocalDate date;
     
     private Integer qualification;
     
     private List<CharacterDTO> listCharacter;
     
-    private GenderEntity gender;
+    private GenderDTO gender;
         
    
 }

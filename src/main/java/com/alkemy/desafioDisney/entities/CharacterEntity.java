@@ -41,7 +41,7 @@ import org.hibernate.annotations.Where;
 public class CharacterEntity {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)   
+    @GeneratedValue(strategy = GenerationType.IDENTITY)   
     private Long id;
     
     private String image;
@@ -54,14 +54,15 @@ public class CharacterEntity {
     
     private String history;
     
-//    @ManyToMany(fetch=FetchType.LAZY, 
-//            cascade = {CascadeType.PERSIST,CascadeType.MERGE})
-//    @JoinTable(name="personaje_pelicula", 
-//            joinColumns = @JoinColumn(name="personaje_id"),
-//            inverseJoinColumns = @JoinColumn(name="pelicula_id"))
+
     
-    @ManyToMany (mappedBy = "listCharacter", cascade= {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToMany (mappedBy = "listCharacter", cascade= {CascadeType.MERGE, 
+                            CascadeType.PERSIST})
+    
+   // private Set<MovieEntity> setMovie = new HashSet<>();
     private List<MovieEntity> listMovie= new ArrayList<>();
+    
+ 
      
     private boolean deleted = Boolean.FALSE; 
     

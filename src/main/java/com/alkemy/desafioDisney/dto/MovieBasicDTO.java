@@ -24,7 +24,7 @@ public class MovieBasicDTO {
     
     private String title;
     
-    private LocalDate date;
+    private String date;
     
     private Integer qualification;
     

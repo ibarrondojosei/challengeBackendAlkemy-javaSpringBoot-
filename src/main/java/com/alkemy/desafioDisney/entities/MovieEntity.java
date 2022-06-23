@@ -50,28 +50,28 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class MovieEntity {
     
     @Id
-   @GeneratedValue(strategy = GenerationType.SEQUENCE)   
+   @GeneratedValue(strategy = GenerationType.IDENTITY)   
     private Long id;
     
     private String image;
     
     private String title;
     
-    @DateTimeFormat(pattern = "yyyy/mm/dd")
+    @DateTimeFormat(pattern = "yyyy/MM/dd")
     @Column(name="fecha_creacion")
     private LocalDate date;
     
     @Range (min=1, max=5)
     private Integer qualification;
     
-    @ManyToMany(fetch=FetchType.LAZY)
+    @ManyToMany(fetch=FetchType.LAZY, cascade={CascadeType.MERGE})
     @JoinTable(name="pelicula_personaje", 
             joinColumns = @JoinColumn(name="pelicula_id", nullable = false),
             inverseJoinColumns = @JoinColumn(name="personaje_id", nullable = false))
     private List<CharacterEntity> listCharacter = new ArrayList<>();
     
     
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="genero_id")
     private GenderEntity gender;
     

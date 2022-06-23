@@ -44,6 +44,7 @@ public class GenderServiceImpl implements GenderService {
         
     }
     
+    @Transactional
     @Override
     public void delete(Long id) {
         Optional <GenderEntity> entity = this.genderRepository.findById(id);
