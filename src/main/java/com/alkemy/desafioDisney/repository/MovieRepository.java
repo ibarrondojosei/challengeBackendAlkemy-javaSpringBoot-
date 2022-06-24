@@ -5,7 +5,10 @@
 package com.alkemy.desafioDisney.repository;
 
 import com.alkemy.desafioDisney.entities.MovieEntity;
+import java.util.List;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -14,6 +17,9 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public interface MovieRepository extends JpaRepository<MovieEntity, Long> {
+public interface MovieRepository extends JpaRepository<MovieEntity, Long>, 
+        JpaSpecificationExecutor<MovieEntity>  {
     
+    @Override
+    List<MovieEntity> findAll(Specification<MovieEntity> specification);
 }

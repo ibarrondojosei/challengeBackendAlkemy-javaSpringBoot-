@@ -6,10 +6,13 @@ package com.alkemy.desafioDisney.service.impl;
 
 import com.alkemy.desafioDisney.dto.MovieBasicDTO;
 import com.alkemy.desafioDisney.dto.MovieDTO;
+import com.alkemy.desafioDisney.dto.filters.MovieFiltersDTO;
 import com.alkemy.desafioDisney.entities.MovieEntity;
 import com.alkemy.desafioDisney.mapper.MovieMapper;
 import com.alkemy.desafioDisney.repository.MovieRepository;
+import com.alkemy.desafioDisney.repository.specification.MovieSpecification;
 import com.alkemy.desafioDisney.service.MovieService;
+import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +30,9 @@ public class MovieServiceImpl implements MovieService {
     private MovieRepository movieRepository;
     @Autowired
     private MovieMapper movieMapper;
+    
+    @Autowired
+    private MovieSpecification movieSpecification;
     
     @Transactional
     @Override
@@ -79,6 +85,22 @@ public class MovieServiceImpl implements MovieService {
         }
         
         this.movieRepository.delete(entity.get());
+    }
+
+    @Transactional
+    @Override
+    public List<MovieBasicDTO> getByFilters(
+            String title, Long gender, String order) {
+        MovieFiltersDTO filterDTO = new MovieFiltersDTO(title, gender, order);
+        
+        List<MovieEntity> movieList= 
+                this.movieRepository.findAll(
+                        this.movieSpecification.getByFilters(filterDTO));
+        
+        List<MovieBasicDTO> movieBasicDTOList = 
+                this.movieMapper.movieEntityList2BasicDTOList(movieList);
+               
+        return movieBasicDTOList;
     }
 
     
