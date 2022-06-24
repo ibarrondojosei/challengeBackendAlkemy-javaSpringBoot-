@@ -91,27 +91,13 @@ public class MovieMapper {
         
         List<MovieEntity> entitylist = new ArrayList();
         
-        
-        
-//        MovieEntity movie = new MovieEntity();
-        
         for (MovieDTO dto : dtoList) {
             
             entitylist.add(this.movieDTO2Entity(dto));
-            
-//        movie.setId(dto.getId());
-//        movie.setImage(dto.getImage());
-//        movie.setTitle(dto.getTitle());
-//        movie.setDate(dto.getDate());
-//        movie.setQualification(dto.getQualification());
-//        movie.setGender(this.genderMapper.genderDTO2Entity(dto.getGender()));
-//            
-//            entityList.add(movie);
-            
+                  
         }
         
-        return entitylist;
-       
+        return entitylist;       
     }
     
     public List<MovieDTO> movieEntitySet2DTOList(Collection<MovieEntity> entities, boolean loadPersonajes) {
@@ -121,6 +107,28 @@ public class MovieMapper {
         }
         return dtos;
     }
+    
+    public List<MovieBasicDTO> movieEntityList2BasicDTOList(List<MovieEntity> entities){
+        
+        List<MovieBasicDTO> basicDTOList = new ArrayList<>();
+        
+        MovieBasicDTO basicDTO;
+        
+        for (MovieEntity entityList : entities) {
+            
+            basicDTO= new MovieBasicDTO();
+            
+            basicDTO.setId(entityList.getId());
+            basicDTO.setImage(entityList.getImage());
+            basicDTO.setTitle(entityList.getTitle());
+            basicDTO.setDate(entityList.getDate().toString());
+            basicDTO.setQualification(entityList.getQualification());
+            basicDTOList.add(basicDTO);
+            
+        }
+        return basicDTOList;
+    }
+    
     
     public void entityRefreshValues (MovieEntity entity, MovieBasicDTO basicDTO){
         
