@@ -6,6 +6,7 @@ package com.alkemy.desafioDisney.service;
 
 import com.alkemy.desafioDisney.dto.CharacterBasicDTO;
 import com.alkemy.desafioDisney.dto.CharacterDTO;
+import java.util.List;
 
 /**
  *
@@ -18,4 +19,8 @@ public interface CharacterService {
     CharacterDTO update(Long id, CharacterBasicDTO basicDTO);
     
     void delete(Long id);
+    
+    List<CharacterBasicDTO> getByFilters (
+            String title, Integer age, Double weight, 
+            List<Long> movieList, String order);
 }

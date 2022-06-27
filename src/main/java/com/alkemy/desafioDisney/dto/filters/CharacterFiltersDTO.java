@@ -19,12 +19,15 @@ public class CharacterFiltersDTO {
     
     private String name;
     private Integer age;
+    private Double weight;
     private List<Long> movieList;
     private String order;
 
-    public CharacterFiltersDTO(String name, Integer age, List<Long> movieList, String order) {
+    public CharacterFiltersDTO(String name, Integer age,Double weight,
+            List<Long> movieList, String order) {
         this.name = name;
         this.age = age;
+        this.weight = weight;
         this.movieList = movieList;
         this.order = order;
     }

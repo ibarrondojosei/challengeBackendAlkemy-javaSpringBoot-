@@ -21,4 +21,9 @@ public interface MovieService {
     void delete (Long id);
     
     List<MovieBasicDTO> getByFilters (String title, Long gender, String order);
+    
+    MovieDTO addCharacter (Long idMovie, Long idCharacter);
+    
+    MovieDTO removeCharacter (Long idMovie, Long idCharacter);
+    
 }
