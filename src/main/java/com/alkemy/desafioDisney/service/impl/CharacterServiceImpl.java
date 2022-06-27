@@ -6,10 +6,14 @@ package com.alkemy.desafioDisney.service.impl;
 
 import com.alkemy.desafioDisney.dto.CharacterBasicDTO;
 import com.alkemy.desafioDisney.dto.CharacterDTO;
+import com.alkemy.desafioDisney.dto.filters.CharacterFiltersDTO;
 import com.alkemy.desafioDisney.entities.CharacterEntity;
+import com.alkemy.desafioDisney.errors.NotFoundException;
 import com.alkemy.desafioDisney.mapper.CharacterMapper;
 import com.alkemy.desafioDisney.repository.CharacterRepository;
+import com.alkemy.desafioDisney.repository.specification.CharacterSpecification;
 import com.alkemy.desafioDisney.service.CharacterService;
+import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +31,8 @@ public class CharacterServiceImpl implements CharacterService {
     private CharacterRepository characterRepository;
     @Autowired
     private CharacterMapper characterMapper;
+    @Autowired
+    private CharacterSpecification characterSpecification; 
     
     @Transactional
     @Override
@@ -50,7 +56,8 @@ public class CharacterServiceImpl implements CharacterService {
                 this.characterRepository.findById(id);
         
         if (!entity.isPresent()) {
-            //Hacer excepcion
+            throw new NotFoundException("El ID: "+ id 
+                    +" no pertenece a un personaje");
         }
         
         this.characterMapper.entityRefreshValues(entity.get(), basicDTO);
@@ -73,6 +80,27 @@ public class CharacterServiceImpl implements CharacterService {
             //Colocar la excepcion
         }
         this.characterRepository.delete(entity.get());
+    }
+
+    @Transactional
+    @Override
+    public List<CharacterBasicDTO> getByFilters(
+                                    String name, Integer age, Double weight,
+                                        List<Long> movieList, String order) {
+        
+         CharacterFiltersDTO filterDTO = new CharacterFiltersDTO(
+                 name, age, weight, movieList, order);
+        
+        List<CharacterEntity> characterList= 
+                this.characterRepository.findAll(
+                        this.characterSpecification.getByFilters(filterDTO));
+        
+        List<CharacterBasicDTO> characterBasicDTOList = 
+                this.characterMapper.characterEntityList2BasicDTOList(
+                        characterList);
+               
+        return characterBasicDTOList;
+        
     }
 
     

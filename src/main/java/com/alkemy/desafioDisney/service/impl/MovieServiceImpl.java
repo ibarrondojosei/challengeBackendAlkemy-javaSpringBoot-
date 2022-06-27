@@ -7,8 +7,11 @@ package com.alkemy.desafioDisney.service.impl;
 import com.alkemy.desafioDisney.dto.MovieBasicDTO;
 import com.alkemy.desafioDisney.dto.MovieDTO;
 import com.alkemy.desafioDisney.dto.filters.MovieFiltersDTO;
+import com.alkemy.desafioDisney.entities.CharacterEntity;
 import com.alkemy.desafioDisney.entities.MovieEntity;
+import com.alkemy.desafioDisney.errors.NotFoundException;
 import com.alkemy.desafioDisney.mapper.MovieMapper;
+import com.alkemy.desafioDisney.repository.CharacterRepository;
 import com.alkemy.desafioDisney.repository.MovieRepository;
 import com.alkemy.desafioDisney.repository.specification.MovieSpecification;
 import com.alkemy.desafioDisney.service.MovieService;
@@ -28,6 +31,10 @@ public class MovieServiceImpl implements MovieService {
 
     @Autowired
     private MovieRepository movieRepository;
+    
+    @Autowired
+    private CharacterRepository characterRepository;
+    
     @Autowired
     private MovieMapper movieMapper;
     
@@ -61,7 +68,8 @@ public class MovieServiceImpl implements MovieService {
                 this.movieRepository.findById(id);
         
         if (!entity.isPresent()) {
-            //Hacer excepcion
+            throw new NotFoundException("El ID: "+ id 
+                    +" no pertenece a una pelicula");
         }
         
         this.movieMapper.entityRefreshValues(entity.get(), basicDTO);
@@ -81,7 +89,8 @@ public class MovieServiceImpl implements MovieService {
       Optional <MovieEntity> entity = this.movieRepository.findById(id);
       
         if (!entity.isPresent()) {
-            //Hacer excepcion
+           throw new NotFoundException("El ID: "+ id 
+                    +" no pertenece a una pelicula");
         }
         
         this.movieRepository.delete(entity.get());
@@ -101,6 +110,54 @@ public class MovieServiceImpl implements MovieService {
                 this.movieMapper.movieEntityList2BasicDTOList(movieList);
                
         return movieBasicDTOList;
+    }
+    
+    @Transactional
+    @Override
+    public MovieDTO addCharacter(Long idMovie, Long idCharacter) {
+        
+        MovieEntity movieEntity = 
+                this.movieRepository.findById(idMovie).orElse(null);
+        CharacterEntity characterEntity = 
+                this.characterRepository.findById(idCharacter).orElse(null);
+        
+        if (characterEntity == null || movieEntity == null || 
+                movieEntity.getListCharacter().contains(characterEntity)) {
+            
+            throw new NotFoundException ("No se pudo agregar el personaje");
+        }
+        
+        movieEntity.getListCharacter().add(characterEntity);
+        
+        MovieEntity entitySave = this.movieRepository.save(movieEntity);
+        
+        MovieDTO dtoResult = this.movieMapper.movieEntity2DTO(entitySave, true);
+        
+        return dtoResult;
+        
+    }
+
+    @Transactional
+    @Override
+    public MovieDTO removeCharacter(Long idMovie, Long idCharacter) {
+         MovieEntity movieEntity = 
+                this.movieRepository.findById(idMovie).orElse(null);
+        CharacterEntity characterEntity = 
+                this.characterRepository.findById(idCharacter).orElse(null);
+        
+        if (characterEntity == null || movieEntity == null) {
+            
+            throw new NotFoundException ("No se pudo remover el personaje");
+        }
+        
+        movieEntity.getListCharacter().remove(characterEntity);
+        
+        MovieEntity entitySave = this.movieRepository.save(movieEntity);
+        
+        MovieDTO dtoResult = this.movieMapper.movieEntity2DTO(entitySave, true);
+        
+        return dtoResult;
+        
     }
 
     
