@@ -23,6 +23,7 @@ import org.springframework.util.StringUtils;
  *
  * @author Jose Ignacio
  */
+@Component
 public class CharacterSpecification {
     
     public Specification<CharacterEntity> getByFilters(
