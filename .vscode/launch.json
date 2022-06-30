@@ -1,0 +1,15 @@
+{
+    "configurations": [
+        
+        {
+            "type": "java",
+            "name": "Spring Boot-DesafioDisneyApplication<desafioDisney>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.alkemy.desafiodisney.DesafioDisneyApplication",
+            "projectName": "desafioDisney",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
