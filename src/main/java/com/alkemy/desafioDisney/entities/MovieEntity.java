@@ -22,7 +22,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 import org.hibernate.validator.constraints.Range;
@@ -41,11 +43,12 @@ import org.springframework.format.annotation.DateTimeFormat;
  */
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name="peliculaSerie")
-@SQLDelete(sql= "UPDATE peliculaSerie SET deleted=true WHERE id=?")
+@SQLDelete(sql= "UPDATE pelicula_serie SET deleted=true WHERE id=?")
 @Where(clause="deleted=false")
 
 public class MovieEntity {

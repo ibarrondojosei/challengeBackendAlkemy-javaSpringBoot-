@@ -51,8 +51,8 @@ public class CharacterSpecification {
             
             if (filterDTO.getMovieList()!= null) {
                 Join<MovieEntity, CharacterEntity> join = 
-                        root.join("listMovie", JoinType.INNER);//nombre del atributo
-                Expression<String> movieId = join.get("id"); //nombre de la columna
+                        root.join("listMovie", JoinType.INNER);//nombre del atributo de la Entidad character
+                Expression<String> movieId = join.get("id"); //nombre del atributo de la Entidad movie
                 predicates.add(movieId.in(filterDTO.getMovieList()));
             }
 

@@ -6,11 +6,15 @@ package com.alkemy.desafioDisney.controller;
 
 import com.alkemy.desafioDisney.dto.MovieBasicDTO;
 import com.alkemy.desafioDisney.dto.MovieDTO;
+import com.alkemy.desafioDisney.entities.MovieEntity;
 import com.alkemy.desafioDisney.errors.BadRequestException;
+import com.alkemy.desafioDisney.repository.MovieRepository;
 import com.alkemy.desafioDisney.service.MovieService;
 import com.alkemy.desafioDisney.service.impl.MovieServiceImpl;
 import java.util.List;
+import java.util.Optional;
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +39,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class MovieController {
     
     @Autowired
+    private MovieRepository movRepo;
+    
+    @Autowired
     private MovieService movieService;
     
     @PostMapping
@@ -45,7 +52,7 @@ public class MovieController {
         return ResponseEntity.status(HttpStatus.CREATED).body(movieSave);
     }
     
-    @DeleteMapping ("/{id}")
+    @DeleteMapping ("{id}")
     public ResponseEntity <MovieDTO> delete (@PathVariable Long id){
         
         this.movieService.delete(id);
@@ -53,7 +60,9 @@ public class MovieController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
     
-    @PutMapping("/{id}")
+    
+    
+    @PutMapping("{id}")
     public ResponseEntity<MovieDTO> update(@RequestBody MovieBasicDTO dto,
                                 BindingResult result, @PathVariable Long id){
         
@@ -84,7 +93,7 @@ public class MovieController {
     @PostMapping("/{idMovie}/Characters/{idCharacter}")
     public ResponseEntity <MovieDTO> addCharacter (@PathVariable Long idMovie, 
                                   @PathVariable Long idCharacter){
-        
+       
         MovieDTO movieDTO = this.movieService.addCharacter (idMovie, idCharacter);
         
         return ResponseEntity.ok().body(movieDTO);

@@ -52,7 +52,7 @@ public class CharacterController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
     
-     @PutMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<CharacterDTO> update(
             @RequestBody CharacterBasicDTO dto,
             BindingResult result,
@@ -66,7 +66,7 @@ public class CharacterController {
         return ResponseEntity.ok().body(characterDTO);
     }
     
-     @GetMapping
+    @GetMapping
     public ResponseEntity <List<CharacterBasicDTO>> getByCombinedFilters (
             @RequestParam (required = false) String name,
             @RequestParam (required = false) Integer age,

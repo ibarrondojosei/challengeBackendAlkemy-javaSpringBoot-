@@ -18,6 +18,7 @@ import com.alkemy.desafioDisney.service.MovieService;
 import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
+import javax.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,9 +45,7 @@ public class MovieServiceImpl implements MovieService {
     @Transactional
     @Override
     public MovieDTO save(MovieDTO dto) {
-//        dto.getListCharacter().forEach(x -> {
-//            System.out.println("DTo ID LISTA CHARACTER: " + x.getId());
-//        });
+
         
         MovieEntity entity = movieMapper.movieDTO2Entity(dto);
         
@@ -72,8 +71,12 @@ public class MovieServiceImpl implements MovieService {
                     +" no pertenece a una pelicula");
         }
         
-        this.movieMapper.entityRefreshValues(entity.get(), basicDTO);
-        
+       this.movieMapper.entityRefreshValues(entity.get(), basicDTO);
+      
+        entity.get().setImage(basicDTO.getImage());
+        entity.get().setTitle(basicDTO.getTitle());
+        entity.get().setQualification(basicDTO.getQualification());
+       
         MovieEntity characterEntity = 
                 this.movieRepository.save(entity.get());
         MovieDTO result = 
@@ -82,12 +85,13 @@ public class MovieServiceImpl implements MovieService {
         return result;
     }
     
-    
     @Transactional
     @Override
     public void delete(Long id) {
+        
       Optional <MovieEntity> entity = this.movieRepository.findById(id);
       
+       
         if (!entity.isPresent()) {
            throw new NotFoundException("El ID: "+ id 
                     +" no pertenece a una pelicula");
